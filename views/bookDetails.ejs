@@ -1,0 +1,11 @@
+<html>
+	<head>
+		<link href="assets/style.css" type="text/css" rel="stylesheet" />
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+	</head>
+	<body>
+		<% for(var i=0; i<Book.length; i++) { %>
+			<p style="display:inline-block;padding:30px;background:#eee;color:#333;"><%= Book[i].name %> (<%= Book[i].year %>) -- <%= Book[i].author.name %> -- </p>
+		<% } %>
+	</body>
+</html>

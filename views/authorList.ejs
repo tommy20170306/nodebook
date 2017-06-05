@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<link href="assets/style.css" type="text/css" rel="stylesheet" />
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+		<script>
+			jQuery(function($){
+				$('ul li').each(function(index, elm){
+					$(this).click(function(event){
+						window.location.href = window.location.href.replace('all', $(this).text());
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Author List</h1>
+			<ul class="list-group">
+				<% for(var i=0; i<AuthorList[0].author.length; i++) { %>
+					<li class="list-group-item"><%= AuthorList[0].author[i] %></li>
+				<% } %>
+			</ul>
+		</div>
+	</body>
+</html>
