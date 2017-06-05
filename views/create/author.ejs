@@ -1,13 +1,9 @@
-<html>
-	<head>
-		<link href="assets/style.css" type="text/css" rel="stylesheet" />
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
-	</head>
-	<body>
-		<h1>New Author:</h1>
-		<form method="POST" action="">
-			Name: <input id="name" name="name" />
-			<input type="submit" value="Submit" />
-		</form>
-	</body>
-</html>
+<%- include('../includes/header'); %>
+
+<h1>New Author:</h1>
+<form method="POST" action="">
+	Name: <input id="name" name="name" />
+	<input type="submit" value="Submit" />
+</form>
+
+<%- include('../includes/footer'); %>

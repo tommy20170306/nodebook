@@ -13,7 +13,7 @@ module.exports = (app) => {
 	});
 
 	app.get('/api/author/create', (req, res) => {
-		res.render('create/author')
+		res.render('create/author');
 	});
 
 	app.post('/api/author/create', (req, res) => {
@@ -34,7 +34,7 @@ module.exports = (app) => {
 			Authors.update({}, {
 				author: currentAuthor		
 			}, (req2, res2) => {
-				res.send("Done");
+				res.redirect('/api/author/all');
 			});
 		});
 	});
@@ -56,7 +56,7 @@ module.exports = (app) => {
 
 		newBook.save((error) => {
 			if(error) throw error;
-			res.send("Success");
+			res.redirect('/api/book');
 		});
 	});
 
@@ -86,5 +86,23 @@ module.exports = (app) => {
 			if(err) throw err;
 			res.render('bookDetails', {Book: books});
 		});
+	});
+
+	app.delete('/api/author/:name', (req, res) => {
+		var currentAuthor;
+		Authors.find({}, (err, authors) => {
+			if(err) throw err;
+			currentAuthor = authors[0].author;
+
+			// push new value to array and update to existing database
+
+			currentAuthor.splice(currentAuthor.indexOf(req.body.name), 1);
+
+			Authors.update({}, {
+				author: currentAuthor		
+			}, (req2, res2) => {
+				//res.redirect('/api/author/all');
+			});
+		});		
 	});
 }

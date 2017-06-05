@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<link href="assets/style.css" type="text/css" rel="stylesheet" />
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
+		<script>
+			jQuery(function($){
+				$('ul li').each(function(index, elm){
+					$(this).click(function(event){
+						window.location.href = window.location.href.replace('all', $(this).text());
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="btn-group" role="group" aria-label="...">
+			  <a href="/api/book">
+			 	 <button type="button" class="btn btn-default">Books</button>
+			  </a>
+			  <a href="/api/author/all">
+			  	<button type="button" class="btn btn-default">Authors</button>
+		  	  </a>
+			</div>

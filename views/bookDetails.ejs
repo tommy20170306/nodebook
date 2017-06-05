@@ -1,11 +1,23 @@
-<html>
-	<head>
-		<link href="assets/style.css" type="text/css" rel="stylesheet" />
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
-	</head>
-	<body>
-		<% for(var i=0; i<Book.length; i++) { %>
-			<p style="display:inline-block;padding:30px;background:#eee;color:#333;"><%= Book[i].name %> (<%= Book[i].year %>) -- <%= Book[i].author.name %> -- </p>
-		<% } %>
-	</body>
-</html>
+<%- include('includes/header'); %>
+<style>
+	.book-item{float:left;width:30%;margin:10px;padding:30px 0;color:#333;text-align:center;cursor:pointer;transition:.3s;background:url('/assets/img/book.png') no-repeat right bottom;background-size:80px;background-color:#eee;}
+	.book-item:hover{background-color:#ccc;}
+</style>
+
+<script>
+	$(function(){
+		$('.book-item').each(function(){
+			$(this).click(function(){
+				window.location.href = '/api/book/'+$(this).find('span').text();
+			});
+		});
+	});
+</script>
+
+<h1>Book List <a href="/api/book/create"><small><i class="fa fa-plus" aria-hidden="true"></i></small></a></h1>
+
+<% for(var i=0; i<Book.length; i++) { %>
+	<p class="book-item"><span><%= Book[i].name %></span> (<%= Book[i].year %>) -- <%= Book[i].author.name %> -- </p>
+<% } %>
+
+<%- include('includes/footer'); %>

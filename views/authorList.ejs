@@ -1,26 +1,41 @@
-<html>
-	<head>
-		<link href="assets/style.css" type="text/css" rel="stylesheet" />
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js" ></script>
-		<script>
-			jQuery(function($){
-				$('ul li').each(function(index, elm){
-					$(this).click(function(event){
-						window.location.href = window.location.href.replace('all', $(this).text());
-					});
+<%- include('includes/header'); %>
+
+<style>
+	li{cursor:pointer;}
+	li:hover{background:#eee;transition:.3s;}
+	li i{float:right;}
+</style>
+
+<script>
+	jQuery(function($){
+		$('ul li').each(function(index, elm){
+			var _self = $(this);
+
+			$(this).click(function(event){
+				window.location.href = window.location.href.replace('all', $(this).text());
+			});
+
+			$(this).find('i').click(function(e){
+				e.stopPropagation();
+				_self.remove();
+				$.ajax({
+					url: '/api/author/'+_self.text(),
+					type: 'DELETE',
+					data: {name: _self.text()},
+					success: function(result){
+						_self.remove();
+					}
 				});
 			});
-		</script>
-	</head>
-	<body>
-		<div class="container">
-			<h1>Author List</h1>
-			<ul class="list-group">
-				<% for(var i=0; i<AuthorList[0].author.length; i++) { %>
-					<li class="list-group-item"><%= AuthorList[0].author[i] %></li>
-				<% } %>
-			</ul>
-		</div>
-	</body>
-</html>
+		});
+	});
+</script>
+
+<h1>Author List <a href="/api/author/create"><small><i class="fa fa-plus" aria-hidden="true"></i></small></a></h1>
+<ul class="list-group">
+	<% for(var i=0; i<AuthorList[0].author.length; i++) { %>
+		<li class="list-group-item"><%= AuthorList[0].author[i] %><i class="fa fa-times" aria-hidden="true"></i></li>
+	<% } %>
+</ul>
+
+<%- include('includes/footer'); %>

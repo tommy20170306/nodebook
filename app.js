@@ -7,6 +7,8 @@ var setupController = require('./controllers/setupController');
 var apiController = require('./controllers/apiController');
 
 app.set('view engine', 'ejs');
+app.use('/assets', express.static(__dirname + '/public'));
+
 mongoose.connect(config.connDB());
 
 setupController(app);
