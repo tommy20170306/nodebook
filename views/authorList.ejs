@@ -17,13 +17,19 @@
 
 			$(this).find('i').click(function(e){
 				e.stopPropagation();
-				_self.remove();
+
+				_self.animate({'opacity':0}, 1000,function(){
+					_self.remove();
+				});
+
 				$.ajax({
 					url: '/api/author/'+_self.text(),
 					type: 'DELETE',
 					data: {name: _self.text()},
 					success: function(result){
-						_self.remove();
+						/*_self.animate({'opacity':0}, 500,function(){
+							_self.remove();
+						})*/
 					}
 				});
 			});

@@ -6,7 +6,8 @@ var bookSchema = new Schema({
 	name: String,
 	year: Number,
 	date: { type: Date, default: Date.now },
-	author: {name: String, age: Number}
+	author: {name: String, age: Number},
+	img: String,
 });
 
 var Books = mongoose.model('Books', bookSchema);

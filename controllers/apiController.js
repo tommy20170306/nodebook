@@ -12,6 +12,10 @@ module.exports = (app) => {
 		res.redirect('/api/book');
 	});
 
+	app.get('/404', (req, res) => {
+		res.status(404).send("404 means...");
+	});
+
 	app.get('/api/author/create', (req, res) => {
 		res.render('create/author');
 	});
@@ -25,6 +29,11 @@ module.exports = (app) => {
 			// check if name inside author array
 			if(currentAuthor.indexOf(req.body.name) > -1){
 				res.send("Author Exists!");
+				return;
+			}
+
+			if(req.body.name.trim() === "" || req.body.name.trim() === null){
+				res.send("No Way!");
 				return;
 			}
 
@@ -47,11 +56,23 @@ module.exports = (app) => {
 	});
 
 	app.post('/api/book/create', (req, res) => {
+
+		var imgPath = null;
+
+		if(req.files){
+			let cover = req.files.img;
+			imgPath = Math.random().toString(36).substring(15)+cover.name;
+			cover.mv('public/uploads/'+imgPath, (err) => {
+
+			});	
+		}
+
 		var newBook = Books({
 			name: req.body.name,
 			year: req.body.year,
 			'author.name': req.body.author,
-			'author.age': req.body.age,		
+			'author.age': req.body.age,
+			img: imgPath		
 		});
 
 		newBook.save((error) => {
@@ -63,13 +84,16 @@ module.exports = (app) => {
 	app.get('/api/book', (req, res) => {
 		Books.find({}, (err, books) => {
 			if(err) throw err;
-			res.render('bookDetails', {Book: books});
+			res.render('bookList', {Book: books});
 		});
 	});
 
 	app.get('/api/book/:name', (req, res) => {
 		Books.find({'name': req.params.name}, (err, books) => {
 			if(err) throw err;
+			if(books[0]){
+				books[0].img = books[0].img === undefined ? "noimg.png" : books[0].img;
+			}
 			res.render('bookDetails', { Book: books });
 		});
 	});
@@ -84,7 +108,7 @@ module.exports = (app) => {
 	app.get('/api/author/:name', (req, res) => {
 		Books.find({'author.name': req.params.name}, (err, books) => {
 			if(err) throw err;
-			res.render('bookDetails', {Book: books});
+			res.render('bookList', {Book: books});
 		});
 	});
 
